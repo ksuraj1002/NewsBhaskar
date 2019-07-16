@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+.ins_storybody {
+    color: #333;
+    float: left;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: normal;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.highlights_wrap {
+    width: 230px;
+    margin: 0 20px 20px 0;
+    padding: 0px 20px 0px 0;
+    float: left;
+    border-right: 1px solid #eee !important;
+}
+
+.highlights_wrap .lhs_highlights li {
+    border-top: 1px solid #eee !important;
+    display: block;
+    font-size: 13px !important;
+    line-height: 18px;
+    margin-left: 1.1em;
+    margin-top: 0 !important;
+    padding: 10px 0 !important;
+}
+
+.newins_widget .newins_widhead h2 {
+    font-family: 'Montserrat',sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    line-height: 18px;
+    color: #666;
+}
+
+.highlights_wrap .lhs_highlights li:first-child {
+    border-top: 0px !important;
+}
+
+.ins_storybody > p:nth-of-type(1) {
+    display: inline;
+}
+
+.static_txt {
+    font-family: 'Montserrat';
+    font-size: 15px;
+    font-weight: 400;
+    background-color: #f5f5f5;
+    padding: 20px;
+    position: relative;
+    float: left;
+    width: 100%;
+    display:none;
+}
+
+.tatic_txt:before {
+    content: "";
+    width: 5px;
+    height: 100%;
+    background-color: #326891;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.comment_story em {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+    display: block;
+    padding: 5px;
+}
+
+.ins_storybody p {
+    margin: 0 0 10px 0;
+    color: #333!important;
+}
+
+.highlights_wrap .lhs_highlights li:last-child {
+    border-bottom: 1px solid #eee !important;
+}
+
+.newins_widget .newins_widhead h2 {
+    font-family: 'Montserrat',sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    line-height: 18px;
+    color: #666;
+}
+
+.lhs_highlights li:before {
+    content: counter(item,decimal);
+    counter-increment: item;
+    display: inline-block;
+    margin-left: -1.5em;
+    padding-right: .5em;
+    text-align: left;
+    width: 1em;
+    color: #999;
+}
+
+.lhs_highlights ol {
+    float: left;
+    width: 100%;
+    counter-reset: item;
+    padding: 0;
+    margin: 0;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.comment_widget .comments_content, .comment_widget .comments_txt, .comment_widget .comments_txt ul, .comment_widget .comments_txt ul li {
+    width: 100%;
+    display: none;
+}
+ 
+.comment_widget {
+    width: 100%;
+    overflow: hidden;
+    display: none!important;
+}
+
+.ins_left_rhs img {
+    max-width: 100%;
+    height: auto;
+}
+
+.ins_mainimage_big img {
+    width: 100%;
+}
+ 
+ iframe{
+ 	display:none;
+ }
+ 
+</style> 
+
+<!-- <script>
+$(document).ready(function () {
+    $("#btnSubmit").click(function () { 
+        $.ajax({
+            type: "POST",
+            url: "/capture",
+            urlresource: $('#urlresource').val(),
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (urlresource) {          	
+                console.log("SUCCESS : ", urlresource);
+                $("#btnSubmit").prop("disabled", false);
+                
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+            }
+        });
+    });
+});
+
+</script>
+ -->
+</head>
+<body>
+<div>
+
+	 <h1 th:text="${newsBody.headline}"></h1>
+	<h3 th:text="${newsBody.leadparagraph}"></h3>
+
+	<div>
+		<img th:src="@{${newsBody.filename}}" class="ins_left_rhs"></img>
+	</div>
+	
+	<div th:utext="${newsBody.body}">
+		
+	</div> 
+</div>
+
+</body>
+</html>

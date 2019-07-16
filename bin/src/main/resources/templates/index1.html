@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<style>
+.mainDiv {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+</style>
+</head>
+<body>
+	<div th:each="news: ${newsData}" class="mainDiv">
+		<div>
+			<a th:href="@{|/redirectsto/${news.categories.category}/${news.id}/${news.headline}|}" th:text="${news.headline}" class="h3">Download</a>
+			<h4 th:text="${news.leadparagraph}"></h4>
+		</div>
+		<div>
+			<img th:src="@{'http://localhost/mydownloads/'+${news.filename}}" style="width:50%; height:40%;" />
+		</div>
+		<!-- <div th:text="${news.body}">
+			
+		</div> -->
+	</div>
+</body>
+</html>

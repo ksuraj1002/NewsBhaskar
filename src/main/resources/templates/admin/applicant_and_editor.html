@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="admin/script_js::csslink"></head>
+<body>
+
+<div th:replace="admin/dashboard :: headers"> </div>
+<div th:replace="admin/dashboard :: sidebar"> </div>
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <div class="table-agile-info">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Brief Details of <span th:text="${msg}"></span>
+                </div>
+                <div>
+                    <table class="table" ui-jq="footable" ui-options='{
+        "paging": {
+          "enabled": true
+        },
+        "filtering": {
+          "enabled": true
+        },
+        "sorting": {
+          "enabled": true
+        }}'>
+                        <thead>
+                        <tr>
+                            <th data-breakpoints="xs">Sr.No</th>
+                            <th data-breakpoints="xs">Name</th>
+                            <th data-breakpoints="xs">Qualification</th>
+                            <th data-breakpoints="xs">Experience</th>
+                            <th data-breakpoints="xs">DOB</th>
+                            <th data-breakpoints="xs">Email</th>
+                            <th data-breakpoints="xs">DOA</th>
+                            <th data-breakpoints="xs">View Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-expanded="true" th:each="list,iterator:${list}" th:if="${list.status=='tobeapproved'} and ${msg=='New Applicants'}">
+                            <td th:text="${(iterator.index)+1}">1</td>
+                            <td th:text="${list.fullname}">Dennise</td>
+                            <td th:text="${list.qualification}">Fuhrman</td>
+                            <td th:text="${list.experience}">High School History Teacher</td>
+                            <td th:text="${list.dob}">July 25th 1960</td>
+                            <td th:text="${list.email}">July 25th 1960</td>
+                            <td th:text="${list.doa}">July 25th 1960</td>
+                            <td><a th:href="@{|/admin/newapplicants/${list.id}?details=${msg}|}">View Details</a></td>
+                        </tr>
+                        <tr data-expanded="true" th:each="list,iterator:${list}" th:if="${list.status=='pending'} and ${msg=='Pending Applicants'}">
+                            <td th:text="${(iterator.index)+1}">1</td>
+                            <td th:text="${list.fullname}">Dennise</td>
+                            <td th:text="${list.qualification}">Fuhrman</td>
+                            <td th:text="${list.experience}">High School History Teacher</td>
+                            <td th:text="${list.dob}">July 25th 1960</td>
+                            <td th:text="${list.email}">July 25th 1960</td>
+                            <td th:text="${list.doa}">July 25th 1960</td>
+                            <td><a th:href="@{|/admin/pendingapplicants/${list.id}?details=${msg}|}">View Details</a></td>
+                        </tr>
+
+                        <tr data-expanded="true" th:each="list,iterator:${list}" th:if="${list.status=='existing'} and ${msg=='Existing Editor'}">
+                            <td th:text="${(iterator.index)+1}">1</td>
+                            <td th:text="${list.fullname}">Dennise</td>
+                            <td th:text="${list.qualification}">Fuhrman</td>
+                            <td th:text="${list.experience}">High School History Teacher</td>
+                            <td th:text="${list.dob}">July 25th 1960</td>
+                            <td th:text="${list.email}">July 25th 1960</td>
+                            <td th:text="${list.doa}">July 25th 1960</td>
+                            <td><a th:href="@{|/admin/pendingapplicants/${list.id}?details=${msg}|}">View Details</a></td>
+                        </tr>
+
+                        <tr data-expanded="true" th:each="list,iterator:${list}" th:if="${list.status=='sackedEditor'} and ${msg=='Sacked Editor'}">
+                            <td th:text="${(iterator.index)+1}">1</td>
+                            <td th:text="${list.fullname}">Dennise</td>
+                            <td th:text="${list.qualification}">Fuhrman</td>
+                            <td th:text="${list.experience}">High School History Teacher</td>
+                            <td th:text="${list.dob}">July 25th 1960</td>
+                            <td th:text="${list.email}">July 25th 1960</td>
+                            <td th:text="${list.doa}">July 25th 1960</td>
+                            <td><a th:href="@{|/admin/pendingapplicants/${list.id}?details=${msg}|}">View Details</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- footer -->
+    <div class="footer">
+        <div class="wthree-copyright">
+            <p>© 2017 Visitors. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+        </div>
+    </div>
+    <!-- / footer -->
+</section>
+
+<div th:replace="admin/script_js::scriptlink"> </div>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="/career::card">&copy; 2016 The Static Templates</div>
+
+    <form action="/uploadmultiplefile" method="post" enctype="multipart/form-data">
+        Profile photo<input type="file" name="profilephotoFile" /><br>
+        resume<input type="file" name="resumeFile" /><br>
+        <input type="submit" value="upload">
+    </form>
+</body>
+</html>

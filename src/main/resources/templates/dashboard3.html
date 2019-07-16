@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Style inputs */
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Style the container/contact section */
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+/* Create two columns that float next to eachother */
+.column {
+  float: left;
+  width: 50%;
+  margin-top: 6px;
+  padding: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<h2>Responsive Contact Section</h2>
+<p>Resize the browser window to see the effect.</p>
+
+<div class="container">
+  <div style="text-align:center">
+    <h2>Contact Us</h2>
+    <p>Swing by for a cup of coffee, or leave us a message:</p>
+  </div>
+  <div class="row">
+    <div class="column">
+      <img src="/w3images/map.jpg" style="width:100%">
+    </div>
+    <div class="column">
+     
+        <label for="headline">Headline</label>
+        <input type="text" id="headline" name="headline" placeholder="Write headline..">
+       
+        <label for="leadparagraph">Lead Paragraph</label>
+        <input type="text" id="leadparagraph" name="leadparagraph" placeholder="Write paragraph..">
+        
+        <label for="category">Category</label>
+        <select id="category" name="categories">
+          <option value="">Select Category</option> 
+          <option th:value="${category.id}" th:each="category: ${mod}" th:text="${category.category}" > </option>
+        </select>
+        
+        <label for="body">Body</label>
+        <textarea id="body" name="body" placeholder="Write content.." style="height:170px"></textarea>
+       
+        <form action="/publish" method="post" enctype="multipart/form-data"> 
+        <label for="fileimage">Associate File</label>
+        <input type="file" id="fileimage" name="fileimage">
+     	</form>
+     	 
+          <button type="button" id="btnSubmit" class="btn btn-primary">Publish</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+$(document).ready(function () {
+
+	
+	$(".alert-success").hide();
+	$(".alert-danger").hide();
+	
+    $("#btnSubmit").click(function () {
+    	
+    var form = $('#fileUploadForm')[0];
+        var data = new FormData(form);
+        
+      
+        
+        var jsonDataObj = {
+        	"headline": $("#headline").val(),
+            "leadparagraph" : $("#leadparagraph").val(),
+            "body" : $("#body").val(),
+            "categories" : $("#category").val()
+        };
+        alert(jsonDataObj.categories);
+        data.append("jsondata", JSON.stringify(jsonDataObj));
+        $("#btnSubmit").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/publish",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (data) {
+              	
+                console.log("SUCCESS : ", data);
+                $("#btnSubmit").prop("disabled", false);
+                $(".alert-success").show();
+                $(".alert-danger").hide();
+                
+            },
+            error: function (e) {
+            	 $(".alert-success").hide();
+                 $(".alert-danger").show();
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

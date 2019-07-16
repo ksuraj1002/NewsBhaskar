@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!------ Include the above in your HEAD tag ---------->
+<meta charset="ISO-8859-1">
+<title>Build your career with us</title>
+<script>
+$(document).ready(function () {
+
+	$("#nextToAddress").click(function(){
+		
+		$("#profile").hide();
+		$("#address").fadeIn()	;
+	});
+	$("#backToprofile").click(function(){
+		$("#address").hide();
+		$("#profile").fadeIn();
+	});
+	
+	$(".alert-success").hide();
+	$(".alert-danger").hide();
+	
+    $("#btnSubmit").click(function () {
+    	//for loading the whole div or an element
+    	/* var old_html = $("#profile").html(); */    	
+    var form = $('#fileUploadForm')[0];
+    var submitData = new FormData(form);
+        
+        if(!($('#invalidCheck2').is(':checked'))){
+            alert('Please accept the Terms & Condition');
+        	return false;        	
+        }
+          
+        var jsonDataObj = {
+        	"fullname": $("#fullname").val(),
+            "email" : $("#email").val(),
+            "mobile" : $("#mobile").val(),
+            "dob" : $("#dob").val(), 
+            "qualification" : $("#qualification").val(),
+            "experience" : $("#experience").val(),
+            "selfDescription" : $("#selfDescription").val(),
+            
+            
+            "state" : $("#state").val(),
+            "city" : $("#city").val(),
+            "landmark" : $("#landmark").val(),
+            "pincode" : $("#pincode").val(),
+            "area" : $("#area").val(),
+            "addressline1" : $("#addressline1").val() 	
+        };
+        
+        submitData.append("jsondata", JSON.stringify(jsonDataObj));
+        $("#btnSubmit").prop("disabled", true);
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/applyprofile",
+            data: submitData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function (submitData) {
+            	//for loading whole element or div
+            	/* $("#profile").html(old_html); */            	
+                console.log("SUCCESS : ", submitData);
+                $("#btnSubmit").prop("disabled", false);
+                $(".alert-success").show();
+                $(".alert-danger").hide();
+                
+            },
+            error: function (e) {
+            	 $(".alert-success").hide();
+                 $(".alert-danger").show();
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+            }
+        });
+    });
+});
+
+</script>
+</head>
+<body>
+
+
+<section class="testimonial py-5" id="testimonial">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4 py-5 bg-primary text-white text-center ">
+                <div class=" ">
+                    <div class="card-body" th:fragment="card">
+                        <img src="http://www.ansonika.com/mavia/img/registration_bg.svg" style="width:30%">
+                        <h2 class="py-3">Registration</h2>
+                        <p>Tation argumentum et usu, dicit viderer evertitur te has. Eu dictas concludaturque usu, facete detracto patrioque an per, lucilius pertinacia eu vel.
+
+</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 py-5 border">
+                <h4 class="pb-4">Please fill with your details</h4>
+                <div class="alert alert-success">File uploaded successfully</div>
+				<div class="alert alert-danger">File is not uploaded. Error occurred</div>
+             <!--    <form action="applyprofile" method="post" autocomplete="off" > -->
+                  <!--  <div id="profile" th:object="${editor}"> -->
+                  <div id="profile">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input  type="text" id="fullname" name="fullname" placeholder="Full Name" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email">
+                        </div>
+                      </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input type="text" id="mobile" name="mobile"placeholder="Enter your mobile" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <input type="date" id="dob" name="dob" class="form-control" title="Date of Birth"  placeholder="Enter your date of birth">
+                        </div>
+                      </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                                  
+                                  <select id="qualification" name="qualification" class="form-control">
+                                    <option selected value="">Enter your higher qualification</option>
+                                    <option value="BSc">BSc</option>
+                                    <option value="MSc">MSc</option>
+                                    <option value="PHd">PHd.</option>
+                                    <option value="Diploma">Diploma</option>
+                                  </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                                  
+                                  <select id="experience" name="experience" class="form-control">
+                                    <option selected value="">Mention your experience ...</option>
+                                    <option value="0">0</option>
+                                    <option value="1-2">1-2</option>
+                                    <option value="3-5">3-5</option>
+                                    <option value="6-Above">6-Above</option>
+                                  </select>
+                        </div>
+                        <div class="form-group col-md-12">
+                                  <textarea id="selfDescription" name="selfDescription" cols="40" rows="5" class="form-control" placeholder="Give Reason Why should we hire you."></textarea>
+                        </div>
+                    </div>
+                   <!--  <div class="form-row">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                                  <label class="form-check-label" for="invalidCheck2">
+                                    <small>By clicking Submit, you agree to our <a href="#">Terms & Conditions</a>, Visitor Agreement and Privacy Policy.</small>
+                                  </label>
+                                </div>
+                              </div>
+                    
+                          </div>
+                    </div> -->
+                    
+                    <form id="fileUploadForm">
+                   	 <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input type="file" name="biodata" id="biodata"  placeholder="Select your biodata" class="form-control">
+                        </div>
+                      </div>
+                    </form>
+                    
+                    <div class="form-row">
+                       <!--  <button type="button" class="btn btn-danger">Submit</button> -->
+                        <button id="nextToAddress" type="button" class="btn btn-danger">Next <i class="fa fa-angle-double-right"></i></button>
+                    </div>
+                  </div>
+                  <!-- Here is Address -->
+                  
+                 <!--   <div id="address" style="display:none" th:object="${address}"> -->
+                 <div id="address" style="display:none">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input  type="text" id="state" name="state" placeholder="Enter your state" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <input type="text" id="city" name="city" class="form-control" placeholder="Enter your city">
+                        </div>
+                      </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input type="text" id="landmark" name="landmark" placeholder="Enter your landmark" class="form-control">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <input type="text" id="pincode" name="pincode" class="form-control"  placeholder="Enter your pincode">
+                        </div>
+                      </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <input type="text"  id="area" name="area" placeholder="Enter your aera" class="form-control">
+                        </div>
+                     <!--    <div class="form-group col-md-6">
+                          <input type="text" name="addressline1" class="form-control" id="addressline1"  placeholder="Enter your ">
+                        </div> -->
+                        <div class="form-group col-md-12">
+                                  <textarea id="addressline1" name="addressline1" cols="40" rows="5" class="form-control" placeholder="Enter here."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+                                  <label class="form-check-label" for="invalidCheck2">
+                                    <small>By clicking Submit, you agree to our <a href="#">Terms & Conditions</a>, Visitor Agreement and Privacy Policy.</small>
+                                  </label>
+                                </div>
+                              </div>
+                    
+                          </div>
+                    </div>
+                    
+                    <div class="form-row">
+                      	<button id="backToprofile" type="button" class="btn btn-success"><i class="fa fa-angle-double-left"></i> Back</button> 
+                       <!--  <input type="submit" class="btn btn-success" value="Submit"> -->
+                        <button type="button" id="btnSubmit" class="btn btn-primary">Apply</button>
+                    </div>
+                  </div>
+                  
+              <!--   </form> -->
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="mainDiv">
+		<div>
+			<h3 th:text="${newsBody.headline}">Headlines</h3>
+			<h4 th:text="${newsBody.leadparagraph}"></h4>
+		</div>
+		<div>
+			<img th:src="@{'http://localhost/mydownloads/'+${newsBody.filename}}" style="width:50%; height:40%;" />
+		</div>
+		 <div th:text="${newsBody.body}">
+			
+		</div> 
+	</div>
+</body>
+</html>

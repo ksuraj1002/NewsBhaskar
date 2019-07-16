@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+    
+    body, html {
+    background: #eaeaea;
+    font-size: 15px;
+    line-height: 21px;
+    font-family: Roboto,sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+    	#parentdiv {
+    	background-color:white;
+    	    font-family: Roboto,sans-serif;
+    	width:38%;
+border-radius: 3px;
+     
+  margin:10px;
+  float:left;
+}
+
+#parentdiv h1 {
+font-size: 21px;
+text-align: center;
+}
+
+#parentdiv:first-child {
+ padding: 13px 15px;
+text-align: center;
+float:left;
+width:50%;
+}
+#parentdiv:first-child h1 {
+font-size: 21px;
+}
+
+#parentdiv:nth-child(2){
+text-align: center;
+    padding: 15px 35px 0px 15px;
+    box-sizing: border-box;
+	width:40%;
+	float:left;
+ font-size: 16px;
+}
+#parentdiv:nth-child(2) h1{
+ font-size: 16px;
+}
+/* 
+#headerdiv h1{
+	margin-top:10px;
+}
+ */
+.imgbrd img{
+	width:90%;
+}
+
+#parentdiv:nth-child(2):before{content: "BIG STORY";font-weight:bolder; font-size:20px; text-align:left;}
+    </style>
+</head>
+ <body>
+	<div id="parentdiv" th:each="news:${newsData}">
+		<div class="imgbrd">
+			<img th:src="@{${news.filename}}" alt="">
+		</div>
+		<div id="headerdiv">
+			<h1 th:text="${news.headline}">hello</h1>
+		</div>
+	</div>
+</body> 
+</html>

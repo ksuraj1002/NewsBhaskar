@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head th:replace="admin/script_js::csslink">
+</head>
+<head>
+    <style>
+        .parent{
+        }
+        .firstchild{
+            width:50%;
+            float:left;
+            border-top: 1px solid darkgray;
+            background-color:whitesmoke;
+            padding:10px;
+            border-right:2px solid darkgray;
+           /* padding:2px;*/
+        }
+
+        .profileimage{
+         /*   width:30%;*/
+            /*float:left;*/
+            padding:10px;
+            background-color:whitesmoke;
+            border-radius:5px;
+            text-align: center;
+        }
+
+        .firstchild div{
+            border-bottom: 1px solid darkgray;
+            padding:15px;
+        }
+
+        .secondchild{
+            width:50%;
+            float:left;
+            background-color:whitesmoke;
+            border-top: 1px solid darkgray;
+            padding:10px;
+        }
+        .secondchild div{
+            border-bottom: 1px solid darkgray;
+            padding:15px;
+        }
+
+        .btn a{
+            text-decoration:none;
+            color:white;
+        }
+     /*   a.disabled{
+            padding:8px;
+            border-radius: 2px;
+            display: inline-block;
+
+        }
+
+       a.disabled:hover {
+            cursor:not-allowed;
+           pointer-events: none;
+        }*/
+        .actionbutton{
+
+            border-top: 1px solid red;
+           /* padding-top:10px;*/
+        }
+    </style>
+</head>
+<body>
+
+<div th:replace="admin/dashboard :: headers"> </div>
+<div th:replace="admin/dashboard :: sidebar"> </div>
+
+<!--main content start-->
+<section id="main-content">
+    <section class="wrapper">
+        <div class="table-agile-info">
+
+            <div class="panel panel-default" th:if="${detailsof==null}">
+                <div class="panel-heading">
+                    Nothing to show any details (sahi kahu to hoshiyari mat pelo smjhe!! ADMI ho ADMI raho programmer mat bano)
+                </div>
+            </div>
+
+            <div class="panel panel-default" th:if="${detailsof!=null}">
+                <div class="panel-heading">
+                    Details of <span th:text="${msg}"></span>
+                </div>
+
+                <div class="parent">
+                    <div class="profileimage">
+                        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                             class="img img-circle" alt="User Image" style="width: 80px; height: 80px;" />
+                    </div>
+                    <div class="firstchild">
+                            <div>Name: <b th:text="${detailsof.fullname}">Suraj</b></div>
+                            <div>Email: <b th:text="${detailsof.email}"></b></div>
+                            <div>Mobile: <b th:text="${detailsof.mobile}"></b></div>
+                            <div>Qualification: <b th:text="${detailsof.qualification}"></b></div>
+                            <div>Experience: <b th:text="${detailsof.experience}"></b></div>
+                            <div>DOB: <b th:text="${detailsof.dob}"></b></div>
+                            <div>Description: <b th:text="${detailsof.selfDescription}"></b></div>
+                    </div>
+                    <div class="secondchild">
+                        <div>State: <b th:text="${detailsof.address.state}">Suraj</b></div>
+                        <div>City: <b th:text="${detailsof.address.city}"></b></div>
+                        <div>Area: <b th:text="${detailsof.address.area}"></b></div>
+                        <div>Area: <b th:text="${detailsof.address.area}"></b></div>
+                        <div>Landmark: <b th:text="${detailsof.address.landmark}"></b></div>
+                        <div>Pincode: <b th:text="${detailsof.address.pincode}"></b></div>
+                        <div>AddressLine1: <b th:text="${detailsof.address.addressline1}"></b></div>
+                    </div>
+                    <div class="actionbutton">
+
+                        <a th:href="@{|/admin/newapplicants/${detailsof.id}/acknowledge|}"><button class="btn btn-success" th:if="${detailsof.status!='pending'}">Send Acknowledge</button></a>
+                        <button class="btn btn-success disabled" th:unless="${detailsof.status!='pending'}"><a th:href="@{|/admin/newapplicants/${detailsof.id}/acknowledge|}" class="btn-success disabled" ></a>Send Acknowledge</button>
+
+                        <button type="button" class="btn btn-danger">Reject</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- footer -->
+    <div class="footer">
+        <div class="wthree-copyright">
+            <p>© 2017 Visitors. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+        </div>
+    </div>
+    <!-- / footer -->
+</section>
+
+<div th:replace="admin/script_js::scriptlink"> </div>
+</body>
+</html>
