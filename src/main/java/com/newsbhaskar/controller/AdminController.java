@@ -84,6 +84,7 @@ public class AdminController {
 	@GetMapping("/newslist")
 	public String getNewsList(){
 		return "admin/newslist";
+		//just test
 	}
 
 }
