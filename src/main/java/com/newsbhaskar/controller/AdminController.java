@@ -2,6 +2,7 @@ package com.newsbhaskar.controller;
 
 import com.newsbhaskar.model.Editor;
 import com.newsbhaskar.service.EditorService;
+import com.newsbhaskar.service.NewsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import com.newsbhaskar.model.Category;
 import com.newsbhaskar.repository.CategoryRepository;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value="/admin",method=RequestMethod.GET)
 public class AdminController {
 	private static final Logger logger=LoggerFactory.getLogger(AdminController.class);
 	@Autowired CategoryRepository categoryRepo;
-	@Autowired 	EditorService editorService;
+	@Autowired EditorService editorService;
+	@Autowired NewsService newsService;
 	
 	@PostMapping("/addcategory")
 	public String addCategory(@RequestParam("category") String paracategory) {
@@ -34,18 +38,15 @@ public class AdminController {
 	@ResponseBody
 	public String deleteCategory(@PathVariable("id") int id) {
 		categoryRepo.deleteById(id);
-		return "deleted ";
+		return "deleted";
 	}
 	
 	@GetMapping("/dashboard")
-	public String getAdminDashboard() {
-		return "admin/dashboard";
-	}
-
-	@GetMapping("/newapplicants")
-	public String getApplicant(Model model){
-		model.addAttribute("newApplicant",editorService.findAllNewApplicant("tobeapproved"));
-		return "admin/newapplicant";
+	public String getAdminDashboard(Model model) {
+		model.addAttribute("countOfApplicant",editorService.countsNewApplicant("tobeapproved"));
+		model.addAttribute("countOfEditor",editorService.countsExistingEditor("existing"));
+		model.addAttribute("countOfNews",editorService.countsAllNews());
+	    return "admin/dashboard";
 	}
 
 	@GetMapping("/{path}/{id}")

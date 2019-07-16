@@ -4,6 +4,7 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.newsbhaskar.repository.NewsRepository;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ public class EditorServiceImpl implements EditorService {
 	@Autowired EditorRepository editorRepo;
 	ObjectMapper objectMapper = new ObjectMapper();
 	@Autowired private JavaMailSender mailSender;
+	@Autowired NewsRepository newsRepository;
+
 	SimpleMailMessage mailMessage=new SimpleMailMessage();
 	
 	@Override
@@ -104,6 +107,21 @@ public class EditorServiceImpl implements EditorService {
 	@Override
 	public List<Editor> findAllApplicantAndEditor() {
 		return editorRepo.findAll();
+	}
+
+	@Override
+	public int countsNewApplicant(String tobeapproved) {
+		return editorRepo.countByStatus(tobeapproved);
+	}
+
+	@Override
+	public long countsAllNews() {
+		return newsRepository.count();
+	}
+
+	@Override
+	public int countsExistingEditor(String existing) {
+		return editorRepo.countByStatus(existing);
 	}
 
 

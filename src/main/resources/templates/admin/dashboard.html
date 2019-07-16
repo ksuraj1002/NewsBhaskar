@@ -340,27 +340,29 @@
                     </div>
                 </div>
                 <div class="col-md-3 market-update-gd">
+                    <a href="/admin/working-editor?param=Existing Editor">
                     <div class="market-update-block clr-block-1">
                         <div class="col-md-4 market-update-right">
                             <i class="fa fa-users" ></i>
                         </div>
                         <div class="col-md-8 market-update-left">
                             <h4>Editors</h4>
-                            <h3>1,250</h3>
+                            <h3 th:text="${countOfEditor}">1,500</h3>
                             <p>Total Number of Editors</p>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 market-update-gd">
-                    <a href="/admin/newapplicants">
+                    <a href="/admin/newapplicant?param=New Applicants">
                     <div class="market-update-block clr-block-3">
                         <div class="col-md-4 market-update-right">
                             <i class="fa fa-user"></i>
                         </div>
                         <div class="col-md-8 market-update-left">
                             <h4>Applicants</h4>
-                            <h3>1,500</h3>
+                            <h3 th:text="${countOfApplicant}">1,500</h3>
                             <p>New Application for Editor</p>
                         </div>
                         <div class="clearfix"> </div>
@@ -387,17 +389,19 @@
             <!-- //market-->
             <div class="market-updates">
                 <div class="col-md-3 market-update-gd">
+                    <a href="/admin/newslist">
                     <div class="market-update-block clr-block-3">
                         <div class="col-md-4 market-update-right">
                             <i class="fa fa-newspaper-o"> </i>
                         </div>
                         <div class="col-md-8 market-update-left">
                             <h4>News</h4>
-                            <h3>13,500</h3>
+                            <h3 th:text="${countOfNews}">1,500</h3>
                             <p>Total number of news</p>
                         </div>
                         <div class="clearfix"> </div>
                     </div>
+                    </a>
                 </div>
                 <div class="col-md-3 market-update-gd">
                     <div class="market-update-block clr-block-2">

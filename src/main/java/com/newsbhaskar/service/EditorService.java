@@ -19,4 +19,10 @@ public interface EditorService {
     void sendAck(Integer id);
 
     List<Editor> findAllApplicantAndEditor();
+
+    int countsNewApplicant(String tobeapproved);
+
+    int countsExistingEditor(String existing);
+
+    long countsAllNews();
 }

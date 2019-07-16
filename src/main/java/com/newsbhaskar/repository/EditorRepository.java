@@ -10,4 +10,8 @@ public interface EditorRepository extends JpaRepository<Editor, Integer> {
     Editor getBiodataById(Integer id);
 
     List<Editor> findAllByStatus(String args);
+
+    List<Editor> findByStatus(String tobeapproved);
+
+    int countByStatus(String args);
 }
