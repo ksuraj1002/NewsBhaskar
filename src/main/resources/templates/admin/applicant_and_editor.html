@@ -67,7 +67,7 @@
                             <td th:text="${list.dob}">July 25th 1960</td>
                             <td th:text="${list.email}">July 25th 1960</td>
                             <td th:text="${list.doa}">July 25th 1960</td>
-                            <td><a th:href="@{|/admin/pendingapplicants/${list.id}?details=${msg}|}">View Details</a></td>
+                            <td><a th:href="@{|/admin/existingeditors/${list.id}?details=${msg}|}">View Details</a></td>
                         </tr>
 
                         <tr data-expanded="true" th:each="list,iterator:${list}" th:if="${list.status=='sackedEditor'} and ${msg=='Sacked Editor'}">
@@ -78,7 +78,7 @@
                             <td th:text="${list.dob}">July 25th 1960</td>
                             <td th:text="${list.email}">July 25th 1960</td>
                             <td th:text="${list.doa}">July 25th 1960</td>
-                            <td><a th:href="@{|/admin/pendingapplicants/${list.id}?details=${msg}|}">View Details</a></td>
+                            <td><a th:href="@{|/admin/sackededitors/${list.id}?details=${msg}|}">View Details</a></td>
                         </tr>
                         </tbody>
                     </table>

@@ -3161,3 +3161,46 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
     padding: 0;
 }
 }
+
+.parent{
+}
+.firstchild{
+    width:50%;
+    float:left;
+    border-top: 1px solid darkgray;
+    background-color:whitesmoke;
+    padding:10px;
+    border-right:2px solid darkgray;
+    /* padding:2px;*/
+}
+.profileimage{
+    /*   width:30%;*/
+    /*float:left;*/
+    padding:10px;
+    background-color:whitesmoke;
+    border-radius:5px;
+    text-align: center;
+}
+.firstchild div{
+    border-bottom: 1px solid darkgray;
+    padding:15px;
+}
+.secondchild{
+    width:50%;
+    float:left;
+    background-color:whitesmoke;
+    border-top: 1px solid darkgray;
+    padding:10px;
+}
+.secondchild div{
+    border-bottom: 1px solid darkgray;
+    padding:15px;
+}
+.btn a{
+    text-decoration:none;
+    color:white;
+}
+
+.actionbutton{
+    border-top: 1px solid red;
+}
