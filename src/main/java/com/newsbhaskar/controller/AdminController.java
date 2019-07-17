@@ -95,7 +95,7 @@ public class AdminController {
 	public String rejectAction(@RequestParam("reason") String name,@RequestParam("id") Integer id){
 
 		System.out.println("yes rejected"+name+" "+id);
-		return "rejected successfully";
+		return "successfully cleared";
 	}
 
 }
