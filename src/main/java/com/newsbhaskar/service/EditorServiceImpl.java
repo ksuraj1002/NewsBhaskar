@@ -1,12 +1,17 @@
 package com.newsbhaskar.service;
 
 import java.io.*;
+import java.net.*;
 import java.time.LocalDate;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import com.newsbhaskar.repository.NewsRepository;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,6 +22,9 @@ import com.newsbhaskar.model.Address;
 import com.newsbhaskar.model.Editor;
 import com.newsbhaskar.repository.EditorRepository;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+
 @Service
 public class EditorServiceImpl implements EditorService {
 	@Autowired EditorRepository editorRepo;
@@ -25,6 +33,7 @@ public class EditorServiceImpl implements EditorService {
 	@Autowired NewsRepository newsRepository;
 
 	SimpleMailMessage mailMessage=new SimpleMailMessage();
+	Logger logger=LoggerFactory.getLogger(EditorServiceImpl.class);
 	
 	@Override
 	public void applyProfile(MultipartFile biodata, String jsondata) throws IOException, ParseException, java.text.ParseException {
@@ -113,6 +122,31 @@ public class EditorServiceImpl implements EditorService {
 	public int countsNewApplicant(String tobeapproved) {
 		return editorRepo.countByStatus(tobeapproved);
 	}
+
+	@Override
+	public void rejectProcess(Integer id, String reason,String status) throws IOException {
+		Editor editor=editorRepo.getOne(id);
+
+		/*boolean isValid=false;
+		try {
+			InternetAddress internetAddress=new InternetAddress(editor.getEmail());
+			internetAddress.validate();
+			isValid=true;
+			System.out.println(isValid);
+		} catch (AddressException e) {
+			System.out.println(" "+isValid+""+e.getMessage());
+		} */
+
+		mailMessage.setTo(editor.getEmail());
+		mailMessage.setSubject("Termination Letter");
+		mailMessage.setText(reason);
+			logger.warn("Here I am in mail message");
+			mailSender.send(mailMessage);
+		editor.setReason(reason);
+		editor.setStatus(status);
+		editorRepo.save(editor);
+	}
+
 
 	@Override
 	public long countsAllNews() {

@@ -5,6 +5,8 @@
 <script>
     $(document).ready(function () {
         $(".showdiv").hide();
+        $("#loader").hide();
+
         $(".rejectbtn").click(function () {
             $(".showdiv").show();
             $(".rejectbtn").hide();
@@ -14,48 +16,50 @@
             $(".rejectbtn").show();
         }) ;
 
-        /*     $(".updaterejection").click(function () {
-                 var request={
-                     "id":$("#requestid").val(),
-                     "reason":$("#reason").val()
-                 };
-                 console.log(Array.from(request));
-                 $.ajax({
-                     type: "POST",
-                     url: "/admin/reject",
-                     data: request,
-                     dataType:"json",
-                     async:false,
-                     success: function(response){
-                         console.log(response);
-                        alert("success ho gya lagbhag "+response.toString());
-                     },
-                     error: function(e){
-                         alert("fail ho gya"+e);
-                     }
-                 });
-             }) ;*/
+       $(".updaterejection").click(function(){
+            $("#loader").show(1000);
 
-
-        $(".updaterejection").click(function(){
             $.post("/admin/reject",
                 {
                     "reason": $("#reason").val(),
-                    "id": $("#requestid").val()
+                    "id": $("#requestid").val(),
+                    "status":$("#status").val()
                 },
                 function(data,status){
-                    if(status=='success'){
-                        alert("Data: " + data + "\nStatus: " + status);
-                    }
-                    else{
-                        alert("failure");
-                    }
+                        $("#loader").hide();
+                        setTimeout(
+                            function()
+                            {
+                                alert("Data: " + data + "\nStatus: " + status);
+                            }, 1000);
 
                 });
         });
 
     });
 </script>
+
+<style>
+#loader {
+    width:50%;
+    height:50%;
+    border-radius: 5px;
+    color: white;
+    padding: 15px;
+    position: absolute;
+    top:70%;
+    left: 50%;
+    background: rgba(1, 65, 60, 0.82);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+    #loader img{
+        position:relative;
+        top:50%;
+        left: 50%;
+    }
+</style>
 <body>
 
 <div th:replace="admin/dashboard :: headers"> </div>
@@ -109,12 +113,18 @@
                     </div>
                     <div class="showdiv">
                         <form th:action="@{|/admin/${#strings.toLowerCase(#strings.replace(msg,' ',''))}/rejected|}" method="post">
+                            <input type="text" th:value="${'sacked'}" th:if="${msg.contains('Existing')}" id="status" name="status">
+                            <input type="text" th:value="${'rejected'}" th:if="${msg.contains('Pending')}" id="status" name="status">
                             <input type="text" th:value="${detailsof.id}" id="requestid" name="requestid">
                             <input type="textarea" cols="24" rows="34" id="reason" name="reason"><br>
                         </form>
                         <button type="button" class="btn btn-danger updaterejection">Reject</button>
                         <button type="button" class="btn btn-danger cancelbtn">Cancel</button>
                     </div>
+                </div>
+
+                <div id="loader">
+                    <img alt="" src="/img/core-img/spinner.gif" style="width:100px">
                 </div>
 
             </div>

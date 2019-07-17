@@ -17,6 +17,16 @@ import org.springframework.web.bind.annotation.*;
 import com.newsbhaskar.model.Category;
 import com.newsbhaskar.repository.CategoryRepository;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.Hashtable;
+import java.util.Map;
+
 @Controller
 @RequestMapping(value="/admin",method=RequestMethod.GET)
 public class AdminController {
@@ -92,10 +102,23 @@ public class AdminController {
 
 	@PostMapping("/reject")
 	@ResponseBody
-	public String rejectAction(@RequestParam("reason") String name,@RequestParam("id") Integer id){
+	public String rejectAction(@RequestParam("status") String status,@RequestParam("reason") String reason,@RequestParam("id") Integer id){
+		try{
+			editorService.rejectProcess(id,reason,status);
+		}catch(Exception e){
+			System.out.println("message by admin controller->"+e.getMessage());
+			return e.getMessage();
+		}
+		return "Mail has been delivered";
+	}
 
-		System.out.println("yes rejected"+name+" "+id);
-		return "successfully cleared";
+	@GetMapping("/testing")
+	@ResponseBody
+	public String getTest(){
+
+
+
+		return "notihiing";
 	}
 
 }

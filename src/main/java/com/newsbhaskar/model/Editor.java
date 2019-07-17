@@ -29,6 +29,7 @@ public class Editor {
 	private String mobile;
 	private String selfDescription;
 	private String status;
+	private String reason;
 	
     //@JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -194,5 +195,13 @@ public class Editor {
 
 	public void setDoa(LocalDate doa) {
 		this.doa = doa;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 }
