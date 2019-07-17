@@ -92,8 +92,9 @@ public class AdminController {
 
 	@PostMapping("/reject")
 	@ResponseBody
-	public String rejectAction(@RequestParam("name") String name){
-		System.out.println("yes rejected"+name);
+	public String rejectAction(@RequestParam("reason") String name,@RequestParam("id") Integer id){
+
+		System.out.println("yes rejected"+name+" "+id);
 		return "rejected successfully";
 	}
 

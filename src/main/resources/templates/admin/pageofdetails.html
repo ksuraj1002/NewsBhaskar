@@ -40,12 +40,15 @@
         $(".updaterejection").click(function(){
             $.post("/admin/reject",
                 {
-                    name: $("#reason").val(),
-                    city: "Duckburg"
+                    "reason": $("#reason").val(),
+                    "id": $("#requestid").val()
                 },
                 function(data,status){
                     if(status=='success'){
                         alert("Data: " + data + "\nStatus: " + status);
+                    }
+                    else{
+                        alert("failure");
                     }
 
                 });
