@@ -136,6 +136,7 @@ public class EditorServiceImpl implements EditorService {
 		} catch (AddressException e) {
 			System.out.println(" "+isValid+""+e.getMessage());
 		} */
+		/*validateEmail(editor.getEmail());*/
 
 		mailMessage.setTo(editor.getEmail());
 		mailMessage.setSubject("Termination Letter");
@@ -146,6 +147,37 @@ public class EditorServiceImpl implements EditorService {
 		editor.setStatus(status);
 		editorRepo.save(editor);
 	}
+
+	/*private void validateEmail(String email) throws IOException {
+
+			String key = "1BZD2K7XGXJKWX4NT5F3";
+			Hashtable<String, String> data = new Hashtable<String, String>();
+			data.put("format", "json");
+			data.put("email", email);
+
+			String datastr = "";
+			for (Map.Entry<String,String> entry : data.entrySet()) {
+				datastr += "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+			}
+			URL url = new URL("https://api.mailboxvalidator.com/v1/validation/single?key=" + key + datastr);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
+
+			if (conn.getResponseCode() != 200) {
+				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+			}
+
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+			String output;
+
+			while ((output = br.readLine()) != null) {
+				System.out.println(output);
+			}
+			conn.disconnect();
+
+	}*/
 
 
 	@Override

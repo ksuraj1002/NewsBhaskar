@@ -2,7 +2,11 @@ package com.newsbhaskar.controller;
 
 import com.newsbhaskar.model.Editor;
 import com.newsbhaskar.service.EditorService;
+import com.newsbhaskar.service.InvalidEmailFoundException;
 import com.newsbhaskar.service.NewsService;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +25,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Hashtable;
@@ -30,15 +33,20 @@ import java.util.Map;
 @Controller
 @RequestMapping(value="/admin",method=RequestMethod.GET)
 public class AdminController {
-	private static final Logger logger=LoggerFactory.getLogger(AdminController.class);
-	@Autowired CategoryRepository categoryRepo;
-	@Autowired EditorService editorService;
-	@Autowired NewsService newsService;
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	@Autowired
+	CategoryRepository categoryRepo;
+	@Autowired
+	EditorService editorService;
+	@Autowired
+	NewsService newsService;
+	@Autowired
+	InvalidEmailFoundException invalidEmailFoundException;
 
 	@PostMapping("/addcategory")
 	public String addCategory(@RequestParam("category") String paracategory) {
 		categoryRepo.save(new Category(paracategory));
-		logger.warn("no "+paracategory);
+		logger.warn("no " + paracategory);
 		return "admin/dashboard";
 	}
 
@@ -51,16 +59,16 @@ public class AdminController {
 
 	@GetMapping("/dashboard")
 	public String getAdminDashboard(Model model) {
-		model.addAttribute("countOfApplicant",editorService.countsNewApplicant("tobeapproved"));
-		model.addAttribute("countOfEditor",editorService.countsExistingEditor("existing"));
-		model.addAttribute("countOfNews",editorService.countsAllNews());
-	    return "admin/dashboard";
+		model.addAttribute("countOfApplicant", editorService.countsNewApplicant("tobeapproved"));
+		model.addAttribute("countOfEditor", editorService.countsExistingEditor("existing"));
+		model.addAttribute("countOfNews", editorService.countsAllNews());
+		return "admin/dashboard";
 	}
 
 	@GetMapping("/{path}/{id}")
-	public String getParticularApplicantDetails(Model model,@PathVariable("path") String path,@PathVariable("id") Integer id,@RequestParam("details") String details){
-		model.addAttribute("detailsof",editorService.findEditorById(id));
-		model.addAttribute("msg",details);
+	public String getParticularApplicantDetails(Model model, @PathVariable("path") String path, @PathVariable("id") Integer id, @RequestParam("details") String details) {
+		model.addAttribute("detailsof", editorService.findEditorById(id));
+		model.addAttribute("msg", details);
 		return "admin/pageofdetails";
 	}
 
@@ -77,48 +85,79 @@ public class AdminController {
 
 	@GetMapping("/newapplicants/{id}/acknowledge")
 	@ResponseBody
-	public String sendAck(@PathVariable("id") Integer id){
+	public String sendAck(@PathVariable("id") Integer id) {
 		editorService.sendAck(id);
 		return "done";
 	}
 
 	@GetMapping("/{path}")
-	public String getPendingApplicant(@PathVariable("path") String path,@RequestParam("param") String param,Model model){
-		model.addAttribute("msg",param);
-		model.addAttribute("list",editorService.findAllApplicantAndEditor());
+	public String getPendingApplicant(@PathVariable("path") String path, @RequestParam("param") String param, Model model) {
+		model.addAttribute("msg", param);
+		model.addAttribute("list", editorService.findAllApplicantAndEditor());
 		return "admin/applicant_and_editor";
 	}
 
 	@GetMapping("/newslist")
-	public String getNewsList(){
+	public String getNewsList() {
 		return "admin/newslist";
 		//just test
 	}
 
 	@GetMapping("/test")
-	public String returnTest(){
+	public String returnTest() {
 		return "admin/test";
 	}
 
 	@PostMapping("/reject")
 	@ResponseBody
-	public String rejectAction(@RequestParam("status") String status,@RequestParam("reason") String reason,@RequestParam("id") Integer id){
-		try{
-			editorService.rejectProcess(id,reason,status);
-		}catch(Exception e){
-			System.out.println("message by admin controller->"+e.getMessage());
-			return e.getMessage();
+	public String rejectAction(@RequestParam("status") String status, @RequestParam("reason") String reason, @RequestParam("id") Integer id) {
+		try {
+			editorService.rejectProcess(id, reason, status);
+		} catch (Exception e) {
+			System.out.println("message by admin controller->" + e.getMessage());
+			return "Mail has  not been delivered due to some reason";
 		}
 		return "Mail has been delivered";
 	}
 
 	@GetMapping("/testing")
 	@ResponseBody
-	public String getTest(){
+	public String getTest() throws IOException, ParseException, InvalidEmailFoundException {
+		JSONParser parser = new JSONParser();
+		JSONObject json;
+		String key = "1BZD2K7XGXJKWX4NT5F3";
+		Hashtable<String, String> data = new Hashtable<String, String>();
+		data.put("format", "json");
+		data.put("email", "ksurajasdfasx@#@gmail.com");
 
+		String datastr = "";
+		for (Map.Entry<String, String> entry : data.entrySet()) {
+			datastr += "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+		}
+		URL url = new URL("https://api.mailboxvalidator.com/v1/validation/single?key=" + key + datastr);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Accept", "application/json");
 
+		if (conn.getResponseCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+		}
 
-		return "notihiing";
+		BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+		String output,out="";
+
+		while ((output = br.readLine()) != null) {
+			out+=output;
+		}
+		json=(JSONObject) parser.parse(out);
+		System.out.println(json.get("is_verified"));
+
+		if(!json.get("is_verified").toString().equalsIgnoreCase("true")){
+			throw new InvalidEmailFoundException("Bad email");
+		}
+
+		conn.disconnect();
+		return "no return";
 	}
-
 }
