@@ -2,68 +2,57 @@
 <html xmlns:th="www.thymeleaf.org">
 <head th:replace="admin/script_js::csslink">
 </head>
-<head>
-    <style>
-        .parent{
-        }
-        .firstchild{
-            width:50%;
-            float:left;
-            border-top: 1px solid darkgray;
-            background-color:whitesmoke;
-            padding:10px;
-            border-right:2px solid darkgray;
-           /* padding:2px;*/
-        }
+<script>
+    $(document).ready(function () {
+        $(".showdiv").hide();
+        $(".rejectbtn").click(function () {
+            $(".showdiv").show();
+            $(".rejectbtn").hide();
+        }) ;
+        $(".cancelbtn").click(function () {
+            $(".showdiv").hide();
+            $(".rejectbtn").show();
+        }) ;
 
-        .profileimage{
-         /*   width:30%;*/
-            /*float:left;*/
-            padding:10px;
-            background-color:whitesmoke;
-            border-radius:5px;
-            text-align: center;
-        }
+        /*     $(".updaterejection").click(function () {
+                 var request={
+                     "id":$("#requestid").val(),
+                     "reason":$("#reason").val()
+                 };
+                 console.log(Array.from(request));
+                 $.ajax({
+                     type: "POST",
+                     url: "/admin/reject",
+                     data: request,
+                     dataType:"json",
+                     async:false,
+                     success: function(response){
+                         console.log(response);
+                        alert("success ho gya lagbhag "+response.toString());
+                     },
+                     error: function(e){
+                         alert("fail ho gya"+e);
+                     }
+                 });
+             }) ;*/
 
-        .firstchild div{
-            border-bottom: 1px solid darkgray;
-            padding:15px;
-        }
 
-        .secondchild{
-            width:50%;
-            float:left;
-            background-color:whitesmoke;
-            border-top: 1px solid darkgray;
-            padding:10px;
-        }
-        .secondchild div{
-            border-bottom: 1px solid darkgray;
-            padding:15px;
-        }
+        $(".updaterejection").click(function(){
+            $.post("/admin/reject",
+                {
+                    name: $("#reason").val(),
+                    city: "Duckburg"
+                },
+                function(data,status){
+                    if(status=='success'){
+                        alert("Data: " + data + "\nStatus: " + status);
+                    }
 
-        .btn a{
-            text-decoration:none;
-            color:white;
-        }
-     /*   a.disabled{
-            padding:8px;
-            border-radius: 2px;
-            display: inline-block;
+                });
+        });
 
-        }
-
-       a.disabled:hover {
-            cursor:not-allowed;
-           pointer-events: none;
-        }*/
-        .actionbutton{
-
-            border-top: 1px solid red;
-           /* padding-top:10px;*/
-        }
-    </style>
-</head>
+    });
+</script>
 <body>
 
 <div th:replace="admin/dashboard :: headers"> </div>
@@ -91,13 +80,13 @@
                              class="img img-circle" alt="User Image" style="width: 80px; height: 80px;" />
                     </div>
                     <div class="firstchild">
-                            <div>Name: <b th:text="${detailsof.fullname}">Suraj</b></div>
-                            <div>Email: <b th:text="${detailsof.email}"></b></div>
-                            <div>Mobile: <b th:text="${detailsof.mobile}"></b></div>
-                            <div>Qualification: <b th:text="${detailsof.qualification}"></b></div>
-                            <div>Experience: <b th:text="${detailsof.experience}"></b></div>
-                            <div>DOB: <b th:text="${detailsof.dob}"></b></div>
-                            <div>Description: <b th:text="${detailsof.selfDescription}"></b></div>
+                        <div>Name: <b th:text="${detailsof.fullname}">Suraj</b></div>
+                        <div>Email: <b th:text="${detailsof.email}"></b></div>
+                        <div>Mobile: <b th:text="${detailsof.mobile}"></b></div>
+                        <div>Qualification: <b th:text="${detailsof.qualification}"></b></div>
+                        <div>Experience: <b th:text="${detailsof.experience}"></b></div>
+                        <div>DOB: <b th:text="${detailsof.dob}"></b></div>
+                        <div>Description: <b th:text="${detailsof.selfDescription}"></b></div>
                     </div>
                     <div class="secondchild">
                         <div>State: <b th:text="${detailsof.address.state}">Suraj</b></div>
@@ -110,10 +99,18 @@
                     </div>
                     <div class="actionbutton">
 
-                        <a th:href="@{|/admin/newapplicants/${detailsof.id}/acknowledge|}"><button class="btn btn-success" th:if="${detailsof.status!='pending'}">Send Acknowledge</button></a>
-                        <button class="btn btn-success disabled" th:unless="${detailsof.status!='pending'}"><a th:href="@{|/admin/newapplicants/${detailsof.id}/acknowledge|}" class="btn-success disabled" ></a>Send Acknowledge</button>
+                        <a th:href="@{|/admin/newapplicants/${detailsof.id}/acknowledge|}"><button class="btn btn-success" th:if="${detailsof.status=='tobeapproved'}">Send Acknowledge</button></a>
+                        <button class="btn btn-success disabled" th:unless="${detailsof.status=='tobeapproved'}"><a th:href="@{|/admin/newapplicants/${detailsof.id}/acknowledge|}" class="btn-success disabled" ></a>Send Acknowledge</button>
 
-                        <button type="button" class="btn btn-danger">Reject</button>
+                        <button type="button" class="btn btn-danger rejectbtn">Reject</button>
+                    </div>
+                    <div class="showdiv">
+                        <form th:action="@{|/admin/${#strings.toLowerCase(#strings.replace(msg,' ',''))}/rejected|}" method="post">
+                            <input type="text" th:value="${detailsof.id}" id="requestid" name="requestid">
+                            <input type="textarea" cols="24" rows="34" id="reason" name="reason"><br>
+                        </form>
+                        <button type="button" class="btn btn-danger updaterejection">Reject</button>
+                        <button type="button" class="btn btn-danger cancelbtn">Cancel</button>
                     </div>
                 </div>
 

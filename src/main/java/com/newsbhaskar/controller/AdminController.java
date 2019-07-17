@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import com.newsbhaskar.model.Category;
 import com.newsbhaskar.repository.CategoryRepository;
 
-import java.util.List;
-
 @Controller
 @RequestMapping(value="/admin",method=RequestMethod.GET)
 public class AdminController {
@@ -26,21 +24,21 @@ public class AdminController {
 	@Autowired CategoryRepository categoryRepo;
 	@Autowired EditorService editorService;
 	@Autowired NewsService newsService;
-	
+
 	@PostMapping("/addcategory")
 	public String addCategory(@RequestParam("category") String paracategory) {
 		categoryRepo.save(new Category(paracategory));
 		logger.warn("no "+paracategory);
 		return "admin/dashboard";
 	}
-	
+
 	@GetMapping("/deletecategory/{id}")
 	@ResponseBody
 	public String deleteCategory(@PathVariable("id") int id) {
 		categoryRepo.deleteById(id);
 		return "deleted";
 	}
-	
+
 	@GetMapping("/dashboard")
 	public String getAdminDashboard(Model model) {
 		model.addAttribute("countOfApplicant",editorService.countsNewApplicant("tobeapproved"));
@@ -85,6 +83,18 @@ public class AdminController {
 	public String getNewsList(){
 		return "admin/newslist";
 		//just test
+	}
+
+	@GetMapping("/test")
+	public String returnTest(){
+		return "admin/test";
+	}
+
+	@PostMapping("/reject")
+	@ResponseBody
+	public String rejectAction(@RequestParam("name") String name){
+		System.out.println("yes rejected"+name);
+		return "rejected successfully";
 	}
 
 }
