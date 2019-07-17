@@ -40,8 +40,8 @@ public class AdminController {
 	EditorService editorService;
 	@Autowired
 	NewsService newsService;
-	@Autowired
-	InvalidEmailFoundException invalidEmailFoundException;
+
+
 
 	@PostMapping("/addcategory")
 	public String addCategory(@RequestParam("category") String paracategory) {
@@ -115,49 +115,9 @@ public class AdminController {
 			editorService.rejectProcess(id, reason, status);
 		} catch (Exception e) {
 			System.out.println("message by admin controller->" + e.getMessage());
-			return "Mail has  not been delivered due to some reason";
+			return e.getMessage();
 		}
 		return "Mail has been delivered";
 	}
 
-	@GetMapping("/testing")
-	@ResponseBody
-	public String getTest() throws IOException, ParseException, InvalidEmailFoundException {
-		JSONParser parser = new JSONParser();
-		JSONObject json;
-		String key = "1BZD2K7XGXJKWX4NT5F3";
-		Hashtable<String, String> data = new Hashtable<String, String>();
-		data.put("format", "json");
-		data.put("email", "ksurajasdfasx@#@gmail.com");
-
-		String datastr = "";
-		for (Map.Entry<String, String> entry : data.entrySet()) {
-			datastr += "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
-		}
-		URL url = new URL("https://api.mailboxvalidator.com/v1/validation/single?key=" + key + datastr);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		conn.setRequestProperty("Accept", "application/json");
-
-		if (conn.getResponseCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-		}
-
-		BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-		String output,out="";
-
-		while ((output = br.readLine()) != null) {
-			out+=output;
-		}
-		json=(JSONObject) parser.parse(out);
-		System.out.println(json.get("is_verified"));
-
-		if(!json.get("is_verified").toString().equalsIgnoreCase("true")){
-			throw new InvalidEmailFoundException("Bad email");
-		}
-
-		conn.disconnect();
-		return "no return";
-	}
 }

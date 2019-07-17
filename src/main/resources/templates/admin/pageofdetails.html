@@ -114,7 +114,7 @@
                     <div class="showdiv">
                         <form th:action="@{|/admin/${#strings.toLowerCase(#strings.replace(msg,' ',''))}/rejected|}" method="post">
                             <input type="text" th:value="${'sacked'}" th:if="${msg.contains('Existing')}" id="status" name="status">
-                            <input type="text" th:value="${'rejected'}" th:if="${msg.contains('Pending')}" id="status" name="status">
+                            <input type="text" th:value="${'rejected'}" th:if="${msg.contains('Pending') or msg.contains('New Applicants')}" id="status" name="status">
                             <input type="text" th:value="${detailsof.id}" id="requestid" name="requestid">
                             <input type="textarea" cols="24" rows="34" id="reason" name="reason"><br>
                         </form>

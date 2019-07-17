@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.newsbhaskar.repository.NewsRepository;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -34,7 +35,10 @@ public class EditorServiceImpl implements EditorService {
 
 	SimpleMailMessage mailMessage=new SimpleMailMessage();
 	Logger logger=LoggerFactory.getLogger(EditorServiceImpl.class);
-	
+
+	private String args;
+	InvalidEmailFoundException invalidEmailFoundException=new InvalidEmailFoundException(args);
+
 	@Override
 	public void applyProfile(MultipartFile biodata, String jsondata) throws IOException, ParseException, java.text.ParseException {
 		//Editor jsonData=objectMapper.readValue(jsondata, Editor.class);
@@ -124,7 +128,7 @@ public class EditorServiceImpl implements EditorService {
 	}
 
 	@Override
-	public void rejectProcess(Integer id, String reason,String status) throws IOException {
+	public void rejectProcess(Integer id, String reason,String status) throws IOException, ParseException, InvalidEmailFoundException {
 		Editor editor=editorRepo.getOne(id);
 
 		/*boolean isValid=false;
@@ -136,7 +140,7 @@ public class EditorServiceImpl implements EditorService {
 		} catch (AddressException e) {
 			System.out.println(" "+isValid+""+e.getMessage());
 		} */
-		/*validateEmail(editor.getEmail());*/
+		validateEmail(editor.getEmail());
 
 		mailMessage.setTo(editor.getEmail());
 		mailMessage.setSubject("Termination Letter");
@@ -148,36 +152,44 @@ public class EditorServiceImpl implements EditorService {
 		editorRepo.save(editor);
 	}
 
-	/*private void validateEmail(String email) throws IOException {
+	private void validateEmail(String email) throws IOException, ParseException, InvalidEmailFoundException {
+		JSONParser parser = new JSONParser();
+		JSONObject json;
+		String key = "1BZD2K7XGXJKWX4NT5F3";
+		Hashtable<String, String> data = new Hashtable<String, String>();
+		data.put("format", "json");
+		data.put("email", email);
 
-			String key = "1BZD2K7XGXJKWX4NT5F3";
-			Hashtable<String, String> data = new Hashtable<String, String>();
-			data.put("format", "json");
-			data.put("email", email);
+		String datastr = "";
+		for (Map.Entry<String, String> entry : data.entrySet()) {
+			datastr += "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+		}
+		URL url = new URL("https://api.mailboxvalidator.com/v1/validation/single?key=" + key + datastr);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Accept", "application/json");
 
-			String datastr = "";
-			for (Map.Entry<String,String> entry : data.entrySet()) {
-				datastr += "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
-			}
-			URL url = new URL("https://api.mailboxvalidator.com/v1/validation/single?key=" + key + datastr);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Accept", "application/json");
+		if (conn.getResponseCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
+		}
 
-			if (conn.getResponseCode() != 200) {
-				throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-			}
+		BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
 
-			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+		String output,out="";
 
-			String output;
+		while ((output = br.readLine()) != null) {
+			out+=output;
+		}
+		json=(JSONObject) parser.parse(out);
+		System.out.println(json.get("is_verified"));
 
-			while ((output = br.readLine()) != null) {
-				System.out.println(output);
-			}
-			conn.disconnect();
+		if(!json.get("is_verified").toString().equalsIgnoreCase("true")){
+			throw new InvalidEmailFoundException("Email does not exist");
+		}
 
-	}*/
+		conn.disconnect();
+
+	}
 
 
 	@Override
