@@ -1,12 +1,9 @@
 package com.newsbhaskar.controller;
 
 import com.newsbhaskar.model.Editor;
+import com.newsbhaskar.model.Thenga;
 import com.newsbhaskar.service.EditorService;
-import com.newsbhaskar.service.InvalidEmailFoundException;
 import com.newsbhaskar.service.NewsService;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import com.newsbhaskar.model.Category;
 import com.newsbhaskar.repository.CategoryRepository;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.List;
 
 @Controller
 @RequestMapping(value="/admin",method=RequestMethod.GET)
@@ -103,11 +93,6 @@ public class AdminController {
 		//just test
 	}
 
-	@GetMapping("/test")
-	public String returnTest() {
-		return "admin/test";
-	}
-
 	@PostMapping("/reject")
 	@ResponseBody
 	public String rejectAction(@RequestParam("status") String status, @RequestParam("reason") String reason, @RequestParam("id") Integer id) {
@@ -118,6 +103,28 @@ public class AdminController {
 			return e.getMessage();
 		}
 		return "Mail has been delivered";
+	}
+
+
+	@GetMapping("/test")
+	public String returnTest() {
+		return "index1";
+	}
+
+	@PostMapping("/submittest")
+	@ResponseBody
+	public Thenga setData(Thenga thenga){
+		System.out.println(thenga.getName());
+		System.out.println(thenga.getCourse());
+		System.out.println(thenga.getMobile());
+		System.out.println(thenga.getEmail());
+		return thenga;
+	}
+
+	@GetMapping("/getDetails")
+	@ResponseBody
+	public List<Editor> getDetail(){
+		return editorService.findAllEditor();
 	}
 
 }

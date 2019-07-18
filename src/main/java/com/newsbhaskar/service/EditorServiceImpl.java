@@ -23,9 +23,6 @@ import com.newsbhaskar.model.Address;
 import com.newsbhaskar.model.Editor;
 import com.newsbhaskar.repository.EditorRepository;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
-
 @Service
 public class EditorServiceImpl implements EditorService {
 	@Autowired EditorRepository editorRepo;
@@ -152,9 +149,15 @@ public class EditorServiceImpl implements EditorService {
 		editorRepo.save(editor);
 	}
 
+	@Override
+	public List<Editor> findAllEditor() {
+		return editorRepo.findAll();
+	}
+
 	private void validateEmail(String email) throws IOException, ParseException, InvalidEmailFoundException {
 		JSONParser parser = new JSONParser();
 		JSONObject json;
+
 		String key = "1BZD2K7XGXJKWX4NT5F3";
 		Hashtable<String, String> data = new Hashtable<String, String>();
 		data.put("format", "json");

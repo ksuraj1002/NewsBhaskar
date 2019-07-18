@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -50,6 +51,7 @@ public class Editor {
     private byte[] bioData;
 	
 	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="editor")
+	@JsonIgnore
 	private Address address;
 
 	public Editor(){

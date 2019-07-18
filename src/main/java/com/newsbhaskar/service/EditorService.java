@@ -27,4 +27,6 @@ public interface EditorService {
     long countsAllNews();
 
     void rejectProcess(Integer id, String reason,String status) throws IOException, ParseException, InvalidEmailFoundException;
+
+    List<Editor> findAllEditor();
 }
