@@ -46,6 +46,12 @@ public class AdminController {
 		categoryRepo.deleteById(id);
 		return "deleted";
 	}
+	@GetMapping("/deleteeditor/{id}")
+	@ResponseBody
+	public String deleteEditor(@PathVariable("id") int id) {
+		editorService.deleteEditorById(id);
+		return "deleted";
+	}
 
 	@GetMapping("/dashboard")
 	public String getAdminDashboard(Model model) {
@@ -105,26 +111,5 @@ public class AdminController {
 		return "Mail has been delivered";
 	}
 
-
-	@GetMapping("/test")
-	public String returnTest() {
-		return "index1";
-	}
-
-	@PostMapping("/submittest")
-	@ResponseBody
-	public Thenga setData(Thenga thenga){
-		System.out.println(thenga.getName());
-		System.out.println(thenga.getCourse());
-		System.out.println(thenga.getMobile());
-		System.out.println(thenga.getEmail());
-		return thenga;
-	}
-
-	@GetMapping("/getDetails")
-	@ResponseBody
-	public List<Editor> getDetail(){
-		return editorService.findAllEditor();
-	}
 
 }

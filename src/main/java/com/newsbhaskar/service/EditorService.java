@@ -29,4 +29,6 @@ public interface EditorService {
     void rejectProcess(Integer id, String reason,String status) throws IOException, ParseException, InvalidEmailFoundException;
 
     List<Editor> findAllEditor();
+
+    void deleteEditorById(int id);
 }

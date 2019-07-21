@@ -1,0 +1,245 @@
+{
+  "created": 1495709719,
+  "updated": 1529054825,
+  "title": "All India Pincode directory with contact details along with Latitude and  longitude",
+  "desc": "All India Pincode directory with contact details along with Latitude and  longitude",
+  "source": "data.gov.in",
+  "org_type": "Central",
+  "org": ["Ministry of Communications and Information Technology", "Department of Posts"],
+  "sector": ["Post", "Information and Communications"],
+  "visualizable": "0",
+  "index_name": "04cbe4b1-2f2b-4c39-a1d5-1c2e28bc0e32",
+  "catalog_uuid": "aed086e9-9ae6-42b8-a4c3-c481f8e9c436",
+  "status": "ok",
+  "field": [{
+    "id": "officename",
+    "name": "officename",
+    "type": "keyword"
+  }, {
+    "id": "pincode",
+    "name": "pincode",
+    "type": "double"
+  }, {
+    "id": "officetype",
+    "name": "officeType",
+    "type": "keyword"
+  }, {
+    "id": "deliverystatus",
+    "name": "Deliverystatus",
+    "type": "keyword"
+  }, {
+    "id": "divisionname",
+    "name": "divisionname",
+    "type": "keyword"
+  }, {
+    "id": "regionname",
+    "name": "regionname",
+    "type": "keyword"
+  }, {
+    "id": "circlename",
+    "name": "circlename",
+    "type": "keyword"
+  }, {
+    "id": "taluk",
+    "name": "Taluk",
+    "type": "keyword"
+  }, {
+    "id": "districtname",
+    "name": "Districtname",
+    "type": "keyword"
+  }, {
+    "id": "statename",
+    "name": "statename",
+    "type": "keyword"
+  }, {
+    "id": "telephone",
+    "name": "Telephone",
+    "type": "keyword"
+  }, {
+    "id": "related_suboffice",
+    "name": "Related Suboffice",
+    "type": "keyword"
+  }, {
+    "id": "related_headoffice",
+    "name": "Related Headoffice",
+    "type": "keyword"
+  }, {
+    "id": "longitude",
+    "name": "longitude",
+    "type": "double"
+  }, {
+    "id": "latitude",
+    "name": "latitude",
+    "type": "double"
+  }],
+  "created_date": "2017-05-25T16:25:19Z",
+  "updated_date": "2018-06-15T14:57:05Z",
+  "active": "1",
+  "message": "Resource detail",
+  "total": 154797,
+  "count": 10,
+  "limit": 10,
+  "offset": "0",
+  "records": [{
+    "officename": "Achalapur B.O",
+    "pincode": "504273",
+    "officetype": "B.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Asifabad",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "NA",
+    "related_suboffice": "Rechini S.O",
+    "related_headoffice": "Mancherial H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Ada B.O",
+    "pincode": "504293",
+    "officetype": "B.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Asifabad",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "NA",
+    "related_suboffice": "Asifabad S.O",
+    "related_headoffice": "Mancherial H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Adegaon B.O",
+    "pincode": "504307",
+    "officetype": "B.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Boath",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "NA",
+    "related_suboffice": "Echoda S.O",
+    "related_headoffice": "Adilabad H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Adilabad Collectorate S.O",
+    "pincode": "504001",
+    "officetype": "S.O",
+    "deliverystatus": "Non-Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Adilabad",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "08732-226703",
+    "related_suboffice": "NA",
+    "related_headoffice": "Adilabad H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Adilabad H.O",
+    "pincode": "504001",
+    "officetype": "H.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Adilabad",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "08732-226738",
+    "related_suboffice": "NA",
+    "related_headoffice": "NA",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Agm Colony S.O",
+    "pincode": "504251",
+    "officetype": "S.O",
+    "deliverystatus": "Non-Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Bellampalle",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "08735-222138",
+    "related_suboffice": "NA",
+    "related_headoffice": "Mancherial H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Ainam B.O",
+    "pincode": "504273",
+    "officetype": "B.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Asifabad",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "NA",
+    "related_suboffice": "Rechini S.O",
+    "related_headoffice": "Mancherial H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Aknepalli B.O",
+    "pincode": "504251",
+    "officetype": "B.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Luxettipet",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "NA",
+    "related_suboffice": "Bellampalli S.O",
+    "related_headoffice": "Mancherial H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Akoli B.O",
+    "pincode": "504309",
+    "officetype": "B.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Adilabad",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "NA",
+    "related_suboffice": "Gumma S.O (Adilabad)",
+    "related_headoffice": "Adilabad H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }, {
+    "officename": "Alegaon B.O",
+    "pincode": "504201",
+    "officetype": "B.O",
+    "deliverystatus": "Delivery",
+    "divisionname": "Adilabad",
+    "regionname": "Hyderabad",
+    "circlename": "Andhra Pradesh",
+    "taluk": "Chennur",
+    "districtname": "Adilabad",
+    "statename": "TELANGANA",
+    "telephone": "NA",
+    "related_suboffice": "Chinnoor S.O",
+    "related_headoffice": "Mancherial H.O",
+    "longitude": "NA",
+    "latitude": "NA"
+  }],
+  "version": "2.1.0"
+}

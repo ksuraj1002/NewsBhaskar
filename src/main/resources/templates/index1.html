@@ -10,14 +10,17 @@
         $(document).ready(function () {
                 $("#btn").click(function(){
                     var i,table="";
-                   $.get("/admin/getDetails",function (data,success) {
-                       table+="<table><th>Name</th><th>Email</th><th>Mobile</th><th>Course</th>";
+                   $.get("/js/sample.json",function (data,success) {
+                       alert("hello")
+                       var v=$.getJSON(sample.json);
+                       alert(v.getValue(3));
+                       /*table+="<table><th>Name</th><th>Email</th><th>Mobile</th><th>Course</th>";
                        for(i=0; i<data.length; i++){
-                           table+="<tr><td>"+data[i].fullname+"</td><td>"+data[i].email+"</td><td>"+data[i].mobile+"</td><td>"+data[i].qualification+"</td></tr></table>";
+                           table+="<tr><td>"+data[i].address.state+"</td><td>"+data[i].email+"</td><td>"+data[i].mobile+"</td><td>"+data[i].qualification+"</td></tr></table>";
                        }
                        document.getElementById("tabledata").innerHTML=table;
                        $("#holder").show();
-                       alert("data "+data+" success "+success);
+                       alert("data "+data+" success "+success);*/
                    });
                 });
         });

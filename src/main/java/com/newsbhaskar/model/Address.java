@@ -80,12 +80,12 @@ public class Address {
 	public void setAddressline1(String addressline1) {
 		this.addressline1 = addressline1;
 	}
-	public Editor getEditor() {
+	/*public Editor getEditor() {
 		return editor;
 	}
 	public void setEditor(Editor editor) {
 		this.editor = editor;
-	}
+	}*/
 	
 	
 }

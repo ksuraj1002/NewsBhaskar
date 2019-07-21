@@ -141,21 +141,5 @@ public class RequestHandler {
 		newsService.submitCommentsAndReaderDetails(jsonData);
 		return "video-post";
 	}
-	
-	@GetMapping("/test")
-	public String getTest(Model model) {
-		model.addAttribute("news", newsRepo.getOne(20));
-		return "test";
-	}
-
-	@PostMapping("/uploadmultiplefile")
-	@ResponseBody
-	public String postUploadFile(Resume resume){
-		System.out.println(resume.getProfilephotoFile().getOriginalFilename()+" "+resume.getProfilephotoFile().getContentType());
-		System.out.println(resume.getResumeFile().getOriginalFilename()+" "+resume.getResumeFile().getContentType());
-		return "uploaded successfull";
-	}
-
-
 
 }

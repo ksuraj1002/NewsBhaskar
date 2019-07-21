@@ -2,14 +2,7 @@ package com.newsbhaskar.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,8 +43,9 @@ public class Editor {
     @Lob
     private byte[] bioData;
 	
-	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy="editor")
-	@JsonIgnore
+	@OneToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL,mappedBy = "editor")
+	/*@JsonIgnore*/
+//	@JoinColumn(name = "addid")
 	private Address address;
 
 	public Editor(){

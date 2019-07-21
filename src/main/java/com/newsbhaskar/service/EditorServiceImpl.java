@@ -37,6 +37,11 @@ public class EditorServiceImpl implements EditorService {
 	InvalidEmailFoundException invalidEmailFoundException=new InvalidEmailFoundException(args);
 
 	@Override
+	public void deleteEditorById(int id) {
+		editorRepo.deleteById(id);
+	}
+
+	@Override
 	public void applyProfile(MultipartFile biodata, String jsondata) throws IOException, ParseException, java.text.ParseException {
 		//Editor jsonData=objectMapper.readValue(jsondata, Editor.class);
 		//objectMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT);
@@ -74,7 +79,7 @@ public class EditorServiceImpl implements EditorService {
 				);
 		
 		Address address=new Address(state,city,landmark,area,pincode,addressline1);
-		address.setEditor(editor);
+		//address.setEditor(editor);
 		editor.setAddress(address);
 		editor.setStatus("tobeapproved");
 		editor.setDoa(LocalDate.now());
